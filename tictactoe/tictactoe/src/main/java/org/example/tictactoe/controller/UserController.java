@@ -2,6 +2,7 @@ package org.example.tictactoe.controller;
 
 import org.example.tictactoe.model.User;
 import org.example.tictactoe.model.UserRepository;
+import org.example.tictactoe.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,29 +13,29 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    private final UserRepository repository;
+    private final UserService service;
 
-    public UserController(UserRepository repository){
-        this.repository = repository;
+    public UserController(UserService service){
+        this.service = service;
     }
 
     @GetMapping(value="/users")
     ResponseEntity<List<User>> readAllUsers(){
-        return ResponseEntity.ok(repository.findAll());
+        return ResponseEntity.ok(service.readAllUsers());
     }
 
     @PostMapping(value="/users")
     ResponseEntity<User> createUser(@RequestBody @Valid User toCreate){
-        User result = repository.save(toCreate);
+        User result = service.createUser(toCreate);
         return ResponseEntity.created(URI.create("/"+result.getId())).body(result);
     }
 
     @DeleteMapping(value="/users/{id}")
     ResponseEntity<?> deleteTask(@PathVariable int id){
 
-        repository.deleteById(id);
+        boolean result = service.deleteUser(id);
 
-        if(repository.existsById(id)){
+        if(result){
             return ResponseEntity.notFound().build();
         }
 
