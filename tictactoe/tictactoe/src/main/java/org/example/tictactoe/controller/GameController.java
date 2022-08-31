@@ -3,6 +3,7 @@ package org.example.tictactoe.controller;
 import org.example.tictactoe.model.Game;
 import org.example.tictactoe.model.GameRepository;
 import org.example.tictactoe.model.User;
+import org.example.tictactoe.service.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,29 +14,29 @@ import java.util.List;
 @RestController
 public class GameController {
 
-    private final GameRepository repository;
+    private final GameService service;
 
-    public GameController(GameRepository repository){
-        this.repository = repository;
+    public GameController(GameService service){
+        this.service = service;
     }
 
     @GetMapping(value="/games")
     ResponseEntity<List<Game>> readAllGames(){
-        return ResponseEntity.ok(repository.findAll());
+        return ResponseEntity.ok(service.readAllGames());
     }
 
     @PostMapping(value="/games")
-    ResponseEntity<Game> createUser(@RequestBody @Valid Game toCreate){
-        Game result = repository.save(toCreate);
+    ResponseEntity<Game> createGame(@RequestBody @Valid Game toCreate){
+        Game result = service.createGame(toCreate);
         return ResponseEntity.created(URI.create("/"+result.getId())).body(result);
     }
 
     @DeleteMapping(value="/games/{id}")
-    ResponseEntity<?> deleteTask(@PathVariable int id){
+    ResponseEntity<?> deleteGame(@PathVariable int id){
 
-        repository.deleteById(id);
+        boolean result = service.deleteGame(id);
 
-        if(repository.existsById(id)){
+        if(result){
             return ResponseEntity.notFound().build();
         }
 
