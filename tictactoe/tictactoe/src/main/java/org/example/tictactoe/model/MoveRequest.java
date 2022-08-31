@@ -9,8 +9,7 @@ public class MoveRequest {
 
     private String token;
 
-    // czy to jest wgl potrzebne?
-    // private Long playerId;
+    private Long playerId;
 
     private Mark mark;
 

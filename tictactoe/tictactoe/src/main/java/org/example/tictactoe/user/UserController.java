@@ -14,14 +14,9 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping
-    ResponseEntity<List<UserEntity>> readAllUsers(){
-        return userService.readAllUsers();
-    }
-
     @PostMapping
-    ResponseEntity<UserEntity> createUser(@RequestBody UserEntity user){
-        return userService.createUser(user);
+    ResponseEntity<UserEntity> register(@RequestBody UserEntity user){
+        return userService.register(user);
     }
 
 }

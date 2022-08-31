@@ -3,8 +3,10 @@ package org.example.tictactoe.game;
 import javax.persistence.*;
 import lombok.*;
 import org.example.tictactoe.common.BaseAuditableEntity;
+import org.example.tictactoe.move.MoveEntity;
 import org.example.tictactoe.user.UserEntity;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,12 +25,20 @@ public class GameEntity {
     private String token;
 
     @Column(name = "CURR_NUM_PLAYERS")
-    private int players = 0;
+    private int numOfPlayers = 0;
 
-    @OneToMany(mappedBy = "game")
-    private Set<UserEntity> userEntities;
+    @Column(name = "PLAYERS")
+    @ElementCollection
+    private List<UserEntity> players;
+
+    @Column(name = "TURN")
+    private boolean turn = false;
 
     @Embedded
     private BaseAuditableEntity audit = new BaseAuditableEntity();
+
+    @OneToMany(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "GAME_ID", updatable = false, insertable = false)
+    private List<MoveEntity> moves;
 
 }

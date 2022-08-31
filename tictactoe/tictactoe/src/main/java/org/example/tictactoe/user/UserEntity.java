@@ -11,7 +11,7 @@ import org.example.tictactoe.game.GameEntity;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="users")
+@Table(name = "USERS")
 public class UserEntity {
 
     @Id
@@ -19,26 +19,16 @@ public class UserEntity {
     @Column(name = "ID")
     private Long id;
 
-    @NotBlank(message = "Nick space must not be empty")
-    @Column(name = "USERNAME")
+    @Column(name = "USERNAME", nullable = false)
     private String username;
 
-    @NotBlank(message = "Mail space must not be empty")
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", nullable = false)
     private String email;
 
-    @NotBlank(message = "Password space must not be empty")
-    @Column(name = "PASSWORD")
+    @Column(name = "PASSWORD", nullable = false)
     private String password;
-
-    @Column(name = "TOKEN")
-    private String token;
 
     @Embedded
     private final BaseAuditableEntity audit = new BaseAuditableEntity();
-
-    @ManyToOne()
-    @JoinColumn(name="game_id")
-    private GameEntity game;
 
 }
