@@ -1,8 +1,6 @@
 package org.example.tictactoe.controller;
 
 import org.example.tictactoe.model.Game;
-import org.example.tictactoe.model.GameRepository;
-import org.example.tictactoe.model.User;
 import org.example.tictactoe.service.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +26,9 @@ public class GameController {
     @PostMapping(value="/games")
     ResponseEntity<Game> createGame(@RequestBody @Valid Game toCreate){
         Game result = service.createGame(toCreate);
-        return ResponseEntity.created(URI.create("/"+result.getId())).body(result);
+
+        URI.create("/"+result.getId());
+        return ResponseEntity.created(URI.create("http://localhost:8080/games/" + result.getToken())).body(result);
     }
 
     @DeleteMapping(value="/games/{id}")
@@ -42,5 +42,14 @@ public class GameController {
 
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping(value="/games/{token}/{playerid}/{move}")
+    //@GetMapping(value="/games/{token}")
+    ResponseEntity<List<Game>> readGames(){
+        //TODO
+        return null;
+    }
+
+
 
 }

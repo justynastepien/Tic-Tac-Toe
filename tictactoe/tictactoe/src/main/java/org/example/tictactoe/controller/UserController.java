@@ -1,7 +1,6 @@
 package org.example.tictactoe.controller;
 
 import org.example.tictactoe.model.User;
-import org.example.tictactoe.model.UserRepository;
 import org.example.tictactoe.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -2,14 +2,8 @@ package org.example.tictactoe.service;
 
 import org.example.tictactoe.model.Game;
 import org.example.tictactoe.model.GameRepository;
-import org.example.tictactoe.model.UserRepository;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 
 @Service
@@ -26,6 +20,9 @@ public class GameService {
     }
 
     public Game createGame(Game toCreate){
+
+        toCreate.setToken(TokenGenerator.generateNewToken());
+
         Game result = repository.save(toCreate);
         return result;
     }

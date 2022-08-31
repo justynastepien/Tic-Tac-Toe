@@ -22,6 +22,8 @@ public class Game {
     @Setter(value = AccessLevel.PUBLIC)
     private int players = 0;
 
+    @Getter(AccessLevel.PUBLIC)
+    @Setter(value = AccessLevel.PUBLIC)
     @OneToMany(mappedBy = "game")
     private Set<User> users;
 
